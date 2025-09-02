@@ -1,40 +1,49 @@
-{% set version = "1.0.0" %}
+{% set name = "requests-futures" %}
+{% set version = "1.0.2" %}
 
 package:
-  name: requests-futures
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/r/requests-futures/requests-futures-{{ version }}.tar.gz
-  sha256: 35547502bf1958044716a03a2f47092a89efe8f9789ab0c4c528d9c9c30bc148
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+  sha256: 6b7eb57940336e800faebc3dab506360edec9478f7b22dc570858ad3aa7458da
 
 build:
-  number: 2
-  noarch: python
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python
     - pip
+    - python
+    - wheel
     - setuptools >=38.6.1
   run:
     - python
     - requests >=1.2.0
 
+# E  fixture 'httpbin' not found
+# tests disabled: pytest-httpbin pkg is not in the main channel.
 test:
   imports:
     - requests_futures
-  requires:
-    - pip
   commands:
     - pip check
-
+  requires:
+    - pip
+  
 about:
   home: https://github.com/ross/requests-futures
   license: Apache-2.0
+  license_family: Apache
   license_file: LICENSE
-  summary: 'Asynchronous Python HTTP for Humans'
+  summary: Asynchronous Python HTTP for Humans.
+  description: |
+    Small add-on for the python requests http library.
+    Makes use of python 3.2's concurrent.futures or the backport for prior versions of python.
+  doc_url: https://github.com/ross/requests-futures/blob/main/README.rst
+  dev_url: https://github.com/ross/requests-futures
 
 extra:
   recipe-maintainers:
