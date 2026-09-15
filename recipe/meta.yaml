@@ -1,30 +1,30 @@
 {% set name = "requests-futures" %}
-{% set version = "1.0.2" %}
+{% set version = "1.1.0" %}
 
+# E  fixture 'httpbin' not found
+# tests disabled: pytest-httpbin pkg is not in the main channel.
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
-  sha256: 6b7eb57940336e800faebc3dab506360edec9478f7b22dc570858ad3aa7458da
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+  sha256: f839cf536e6638a6e0ca1cfd54ac761bf3bb2b5a7ecf9349557e53acc5244d36
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<310]
 
 requirements:
   host:
     - pip
     - python
-    - wheel
-    - setuptools >=38.6.1
+    - setuptools >=77
   run:
     - python
     - requests >=1.2.0
 
-# E  fixture 'httpbin' not found
-# tests disabled: pytest-httpbin pkg is not in the main channel.
 test:
   imports:
     - requests_futures
@@ -32,7 +32,7 @@ test:
     - pip check
   requires:
     - pip
-  
+
 about:
   home: https://github.com/ross/requests-futures
   license: Apache-2.0
