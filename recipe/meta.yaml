@@ -1,10 +1,8 @@
 {% set name = "requests-futures" %}
 {% set version = "1.1.0" %}
 
-# E  fixture 'httpbin' not found
-# tests disabled: pytest-httpbin pkg is not in the main channel.
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -16,6 +14,8 @@ build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
 
+# Upstream source:
+# https://github.com/ross/requests-futures/blob/v1.1.0/pyproject.toml
 requirements:
   host:
     - pip
@@ -25,6 +25,8 @@ requirements:
     - python
     - requests >=1.2.0
 
+# E  fixture 'httpbin' not found
+# tests disabled: pytest-httpbin pkg is not in the main channel.
 test:
   imports:
     - requests_futures
